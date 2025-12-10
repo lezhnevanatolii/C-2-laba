@@ -1,0 +1,63 @@
+#include <iostream>
+#include <vector>
+#include <list>
+#include <algorithm>
+
+int main() {
+    int n;
+    std::cout << "Введите четное количество элементов для вектора: ";
+    std::cin >> n;
+    
+    while (n % 2 != 0 || n <= 0) {
+        std::cout << "Пожалуйста, введите четное положительное число: ";
+        std::cin >> n;
+    }
+    
+    std::vector<int> V(n);
+    std::cout << "Введите " << n << " элементов вектора:\n";
+    for (int i = 0; i < n; ++i) {
+        std::cin >> V[i];
+    }
+    
+    
+    int m;
+    std::cout << "Введите количество элементов для списка: ";
+    std::cin >> m;
+    
+    std::list<int> L;
+    std::cout << "Введите " << m << " элементов списка:\n";
+    for (int i = 0; i < m; ++i) {
+        int val;
+        std::cin >> val;
+        L.push_back(val);
+    }
+    
+    auto half_end = V.begin() + n / 2;
+    auto last_match = L.end();
+    
+    auto it = L.begin();
+    while (it != L.end()) {
+        auto found_in_vector = std::find(V.begin(), half_end, *it);
+        if (found_in_vector != half_end) {
+            last_match = it;
+        }
+        ++it;
+    }
+    
+
+    if (last_match != L.end()) {
+        L.insert(last_match, *last_match);
+        std::cout << "Дублирован элемент: " << *last_match << std::endl;
+    } else {
+        std::cout << "Совпадений не найдено, список не изменен\n";
+    }
+    
+    
+    std::cout << "Итоговый список: ";
+    for (auto elem : L) {
+        std::cout << elem << " ";
+    }
+    std::cout << std::endl;
+    
+    return 0;
+}
