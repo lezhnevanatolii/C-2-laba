@@ -1,0 +1,63 @@
+#include <iostream>
+#include <vector>
+#include <limits>
+
+
+bool read_integer(int& value) {
+    std::cin >> value;
+    if (std::cin.fail()) {
+        std::cin.clear(); 
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+        return false;
+    }
+    return true;
+}
+
+
+void fill_vector(std::vector<int>& vec) {
+    int count;
+    std::cout << "Введите количество элементов вектора: ";
+    while (true) {
+        if (!read_integer(count) || count <= 0) {
+            std::cout << "Некорректный ввод. Введите положительное число: ";
+        } else {
+            break;
+        }
+    }
+
+    std::cout << "Введите " << count << " элементов:\n";
+    for (int i = 0; i < count; ++i) {
+        int num;
+        while (true) {
+            std::cout << "Элемент #" << i + 1 << ": ";
+            if (read_integer(num)) {
+                vec.push_back(num);
+                break;
+            } else {
+                std::cout << "Некорректный ввод. Попробуйте ещё раз.\n";
+            }
+        }
+    }
+}
+
+
+void insert_after_each_element(std::vector<int>& vec) {
+    for (auto it = vec.begin(); it != vec.end(); /* внутри цикла */) {
+        it = vec.insert(++it, -1); 
+    }
+}
+
+
+int main() {
+    std::vector<int> V;
+    fill_vector(V);
+    insert_after_each_element(V);
+
+    std::cout << "Результирующий вектор:\n";
+    for (const auto& elem : V) {
+        std::cout << elem << ' ';
+    }
+    std::cout << '\n';
+
+    return 0;
+}
