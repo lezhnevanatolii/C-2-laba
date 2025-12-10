@@ -1,0 +1,60 @@
+#include <iostream>
+#include <deque>
+#include <limits>
+
+bool read_integer(int& value) {
+    std::cin >> value;
+    if (std::cin.fail()) {
+        std::cin.clear(); 
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+        return false;
+    }
+    return true;
+}
+
+
+void fill_deque(std::deque<int>& d) {
+    int count;
+    std::cout << "Введите нечетное количество элементов дека (≥3): ";
+    while (true) {
+        if (!read_integer(count) || count < 3 || count % 2 == 0) {
+            std::cout << "Некорректный ввод. Введите нечетное число ≥ 3: ";
+        } else {
+            break;
+        }
+    }
+    std::cout << "Введите " << count << " элементов:\n";
+    for (int i = 0; i < count; ++i) {
+        int num;
+        while (true) {
+            std::cout << "Элемент #" << i + 1 << ": ";
+            if (read_integer(num)) {
+                d.push_back(num);
+                break;
+            } else {
+                std::cout << "Некорректный ввод. Попробуйте ещё раз.\n";
+            }
+        }
+    }
+}
+
+
+void remove_middle_element(std::deque<int>& d) {
+    int N = d.size();
+    int middle_index = N / 2; 
+    auto it = d.begin() + middle_index;
+    d.erase(it);
+}
+
+
+int main() {
+    std::deque<int> D;
+    fill_deque(D);
+    remove_middle_element(D);
+    std::cout << "Дек после удаления среднего элемента:\n";
+    for (const auto& elem : D) {
+        std::cout << elem << ' ';
+    }
+    std::cout << '\n';
+    return 0;
+}
