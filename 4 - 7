@@ -1,0 +1,41 @@
+#include <iostream>
+#include <fstream>
+#include <algorithm>   
+#include <string>
+
+int main() {
+    std::string name;
+    int K;
+
+    
+    std::cout << "Введите имя файла: ";
+    std::cin >> name;
+
+    
+    std::cout << "Введите число K (> 0): ";
+    while (true) {
+        std::cin >> K;
+        if (std::cin.fail() || K <= 0) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Некорректный ввод. Введите число K (> 0): ";
+        } else {
+            break;
+        }
+    }
+
+    
+    std::ofstream ofs(name);
+    if (!ofs) {
+        std::cerr << "Не удалось открыть файл для записи.\n";
+        return 1;
+    }
+
+    
+    fill_n(std::ostreambuf_iterator<char>(ofs), K, '*');
+
+    ofs.close();
+    std::cout << "Записано " << K << " символов '*' в файл " << name << ".\n";
+
+    return 0;
+}
