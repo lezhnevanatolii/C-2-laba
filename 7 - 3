@@ -1,0 +1,36 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <functional>
+#include <iterator>
+
+int main() {
+    int n;
+    std::cout << "Введите количество элементов для вектора (не менее 3): ";
+    std::cin >> n;
+    
+    while (n < 3) {
+        std::cout << "Вектор должен содержать не менее 3 элементов! Введите еще раз: ";
+        std::cin >> n;
+    }
+    
+    std::vector<int> V(n);
+    std::cout << "Введите " << n << " элементов вектора:\n";
+    for (int i = 0; i < n; ++i) {
+        std::cin >> V[i];
+    }
+    
+    std::cout << "\nИсходный вектор: ";
+    for (auto elem : V) {
+        std::cout << elem << " ";
+    }
+    std::cout << std::endl;
+    
+    std::partial_sort(V.begin(), V.begin() + 3, V.end(), std::greater<int>());
+    
+    std::cout << "Три наибольших элемента после сортировки (по убыванию): ";
+    std::copy(V.begin(), V.begin() + 3, std::ostream_iterator<int>(std::cout, " "));
+    std::cout << std::endl;
+    
+    return 0;
+}
