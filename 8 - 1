@@ -1,0 +1,74 @@
+#include <iostream>
+#include <list>
+#include <vector>
+#include <algorithm>
+#include <functional>
+#include <iterator>
+#include <numeric>
+
+int main() {
+    int n;
+    std::cout << "Введите количество элементов для списка: ";
+    std::cin >> n;
+    
+    while (n < 2) {
+        std::cout << "Список должен содержать не менее 2 элементов! Введите еще раз: ";
+        std::cin >> n;
+    }
+    
+    std::list<int> L;
+    std::cout << "Введите " << n << " элементов списка (целые числа):\n";
+    for (int i = 0; i < n; ++i) {
+        int val;
+        std::cin >> val;
+        L.push_back(val);
+    }
+    
+
+    std::cout << "\nИсходный список L: ";
+    for (auto elem : L) {
+        std::cout << elem << " ";
+    }
+    std::cout << std::endl;
+    
+
+    std::vector<double> sums;
+    
+
+    auto sum_op = [](int a, int b) {
+        return static_cast<double>(a + b);
+    };
+    
+   
+    std::adjacent_difference(L.begin(), L.end(), 
+                             std::back_inserter(sums),
+                             sum_op);
+    
+    
+    if (!sums.empty()) {
+        sums.erase(sums.begin());
+    }
+    
+   
+    std::vector<double> V;
+    V.reserve(sums.size());
+    
+    for (double sum : sums) {
+        V.push_back(sum / 2.0);
+    }
+    
+   
+    std::cout << "\nВектор V (средние арифметические соседних элементов):\n";
+    std::cout.precision(2);
+    std::cout << std::fixed;
+    
+    for (size_t i = 0; i < V.size(); ++i) {
+        std::cout << V[i];
+        if (i < V.size() - 1) {
+            std::cout << ", ";
+        }
+    }
+    std::cout << std::endl;
+    
+    return 0;
+}
