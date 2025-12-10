@@ -1,0 +1,82 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <set>
+
+int main() {
+    int size0;
+    std::cout << "Введите количество элементов вектора V0: ";
+    std::cin >> size0;
+    
+    std::vector<int> V0(size0);
+    std::cout << "Введите " << size0 << " элементов вектора V0:\n";
+    for (int i = 0; i < size0; ++i) {
+        std::cin >> V0[i];
+    }
+    
+
+    int N;
+    std::cout << "Введите число N (> 0): ";
+    std::cin >> N;
+    
+    while (N <= 0) {
+        std::cout << "N должно быть больше 0! Введите снова: ";
+        std::cin >> N;
+    }
+    
+
+    std::vector<std::vector<int>> vectors(N);
+    for (int i = 0; i < N; ++i) {
+        int size;
+        std::cout << "\nВведите количество элементов вектора V" << (i + 1) << ": ";
+        std::cin >> size;
+        
+        
+        if (size < size0) {
+            std::cout << "Размер вектора V" << (i + 1) 
+                      << " меньше размера V0 (" << size0 << ")! Введите снова: ";
+            std::cin >> size;
+        }
+        
+        vectors[i].resize(size);
+        std::cout << "Введите " << size << " элементов вектора V" << (i + 1) << ":\n";
+        for (int j = 0; j < size; ++j) {
+            std::cin >> vectors[i][j];
+        }
+    }
+    
+    
+    std::set<int> setV0(V0.begin(), V0.end());
+    
+    
+    int count = 0;
+    
+    for (int i = 0; i < N; ++i) {
+        std::set<int> setVi(vectors[i].begin(), vectors[i].end());
+        
+        
+        if (std::includes(setVi.begin(), setVi.end(), 
+                         setV0.begin(), setV0.end())) {
+            count++;
+        }
+    }
+    
+    
+    std::cout << "\n=== РЕЗУЛЬТАТЫ ===\n";
+    std::cout << "Вектор V0: ";
+    for (auto elem : V0) {
+        std::cout << elem << " ";
+    }
+    std::cout << std::endl;
+    
+    std::cout << "Уникальные элементы V0: ";
+    for (auto elem : setV0) {
+        std::cout << elem << " ";
+    }
+    std::cout << std::endl;
+    
+    std::cout << "\nКоличество векторов V1..VN, содержащих все элементы V0: " 
+              << count << std::endl;
+    
+    return 0;
+}
