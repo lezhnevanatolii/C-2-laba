@@ -1,0 +1,77 @@
+#include <iostream>
+#include <deque>
+#include <limits>
+#include <iterator>
+#include <algorithm>
+
+
+bool read_integer(int& value) {
+    std::cin >> value;
+    if (std::cin.fail()) {
+        std::cin.clear(); 
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+        return false;
+    }
+    return true;
+}
+
+
+void input_numbers(std::deque<int>& numbers) {
+    int count = 0;
+    std::cout << "Введите чётное количество целых чисел: ";
+    while (true) {
+        if (!(read_integer(count)) || count <= 0 || (count % 2 != 0)) {
+            std::cout << "Некорректный ввод. Пожалуйста, введите чётное положительное число: ";
+        } else {
+            break;
+        }
+    }
+
+    std::cout << "Введите " << count << " чисел:\n";
+
+    for (int i = 0; i < count; ++i) {
+        int num;
+        while (true) {
+            std::cout << "Число #" << i + 1 << ": ";
+            if (read_integer(num)) {
+                numbers.push_back(num);
+                break;
+            } else {
+                std::cout << "Некорректный ввод. Попробуйте ещё раз.\n";
+            }
+        }
+    }
+}
+
+
+void process_and_display(const std::deque<int>& numbers) {
+    int half_size = static_cast<int>(numbers.size()) / 2;
+    auto first_half_begin = numbers.begin();
+    auto first_half_end = first_half_begin + half_size;
+    auto second_half_begin = first_half_end;
+    auto second_half_end = numbers.end();
+
+    std::cout << "Первая половина в обратном порядке:\n";
+    for (auto it = first_half_end; it != first_half_begin; --it) {
+        std::cout << *std::prev(it) << ' ';
+    }
+    std::cout << "\n";
+
+    std::cout << "Вторая половина в обратном порядке:\n";
+    for (auto it = second_half_end; it != second_half_begin; --it) {
+        std::cout << *std::prev(it) << ' ';
+    }
+    std::cout << "\n";
+}
+
+int main() {
+    std::deque<int> numbers;
+
+    
+    input_numbers(numbers);
+
+    
+    process_and_display(numbers);
+
+    return 0;
+}
