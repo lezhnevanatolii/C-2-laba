@@ -1,0 +1,87 @@
+#include <iostream>
+#include <list>
+#include <algorithm>
+#include <iterator>
+
+int main() {
+    int K;
+    std::cout << "Введите число K (0 < K < 10): ";
+    std::cin >> K;
+    
+    while (K <= 0 || K >= 10) {
+        std::cout << "Неверное значение! Введите число K (0 < K < 10): ";
+        std::cin >> K;
+    }
+    
+    std::list<int> L1;
+    int size1;
+    std::cout << "Введите количество элементов для списка L1 (не менее 10): ";
+    std::cin >> size1;
+    
+    while (size1 < 10) {
+        std::cout << "Список должен содержать не менее 10 элементов! Введите еще раз: ";
+        std::cin >> size1;
+    }
+    
+    std::cout << "Введите " << size1 << " элементов списка L1:\n";
+    for (int i = 0; i < size1; ++i) {
+        int val;
+        std::cin >> val;
+        L1.push_back(val);
+    }
+    
+    std::list<int> L2;
+    int size2;
+    std::cout << "Введите количество элементов для списка L2 (не менее 10): ";
+    std::cin >> size2;
+    
+    while (size2 < 10) {
+        std::cout << "Список должен содержать не менее 10 элементов! Введите еще раз: ";
+        std::cin >> size2;
+    }
+    
+    std::cout << "Введите " << size2 << " элементов списка L2:\n";
+    for (int i = 0; i < size2; ++i) {
+        int val;
+        std::cin >> val;
+        L2.push_back(val);
+    }
+    
+    std::cout << "\nИсходный список L1: ";
+    for (auto elem : L1) {
+        std::cout << elem << " ";
+    }
+    std::cout << "\nИсходный список L2: ";
+    for (auto elem : L2) {
+        std::cout << elem << " ";
+    }
+    std::cout << std::endl;
+    
+    if (!L1.empty()) {
+        auto middle = L1.begin();
+        std::advance(middle, L1.size() - K);
+        std::rotate(L1.begin(), middle, L1.end());
+    }
+    
+
+    if (!L2.empty()) {
+        auto middle = L2.begin();
+        std::advance(middle, K);
+        std::rotate(L2.begin(), middle, L2.end());
+    }
+    
+    std::cout << "\nПосле циклического сдвига вправо на " << K << " позиций:\n";
+    std::cout << "Список L1: ";
+    for (auto elem : L1) {
+        std::cout << elem << " ";
+    }
+    
+    std::cout << "\n\nПосле циклического сдвига влево на " << K << " позиций:\n";
+    std::cout << "Список L2: ";
+    for (auto elem : L2) {
+        std::cout << elem << " ";
+    }
+    std::cout << std::endl;
+    
+    return 0;
+}
