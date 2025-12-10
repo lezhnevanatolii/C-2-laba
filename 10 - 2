@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <map>
+
+int main() {
+    int n;
+    std::cout << "Введите количество английских слов (заглавные буквы): ";
+    std::cin >> n;
+    
+    std::vector<std::string> V(n);
+    std::cout << "Введите " << n << " английских слов (только заглавные буквы):\n";
+    for (int i = 0; i < n; ++i) {
+        std::cin >> V[i];
+    }
+    
+    std::cout << "\nИсходный вектор слов:\n";
+    for (const auto& word : V) {
+        std::cout << word << " ";
+    }
+    std::cout << std::endl;
+    
+    
+    std::map<char, int> M;
+    
+    
+    for (const auto& word : V) {
+        if (!word.empty()) {
+            
+            char firstLetter = word[0];
+            
+            M[firstLetter] += word.size();
+        }
+    }
+    
+    
+    std::cout << "\n РЕЗУЛЬТАТЫ \n";
+    std::cout << "Буква и суммарная длина слов, начинающихся с этой буквы:\n";
+    
+    
+    for (auto it = M.begin(); it != M.end(); ++it) {
+        std::cout << it->first << " " << it->second << std::endl;
+    }
+    
+    return 0;
+}
